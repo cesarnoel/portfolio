@@ -1,0 +1,28 @@
+// =============================================================
+//  Portfolio stylesheet entry point
+//  Pipeline:  dart-sass  ->  PostCSS (Tailwind + Autoprefixer)
+//  Order matters: Tailwind first, custom CSS afterwards, with
+//  component rules wrapped in `@layer components` so utility
+//  classes in JSX can still override them.
+// =============================================================
+
+// 1. Tailwind base / components / utilities
+@use 'tailwind';
+
+// 2. Global element styling and motion primitives
+@use 'base/typography';
+@use 'base/animations';
+
+// 3. Page structure
+@use 'layout/sections';
+@use 'layout/footer';
+
+// 4. Components
+@use 'components/buttons';
+@use 'components/cards';
+@use 'components/navbar';
+@use 'components/timeline';
+@use 'components/forms';
+
+// 5. Small utilities / progressive-enhancement helpers
+@use 'utilities/helpers';

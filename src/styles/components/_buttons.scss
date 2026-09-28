@@ -1,0 +1,215 @@
+@use '../abstracts' as a;
+
+// =============================================================
+//  Buttons, chips and tag pills
+// =============================================================
+
+@layer components {
+  .btn {
+    @include a.flex(row, 0.55rem, center, center);
+
+    position: relative;
+    overflow: hidden;
+    padding: 0.78rem 1.4rem;
+    border: 1px solid transparent;
+    border-radius: a.radius('pill');
+    font-size: a.fs('sm');
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: transform a.$duration-fast a.$ease-out,
+      box-shadow a.$duration-fast a.$ease-out, background-color a.$duration-fast a.$ease-out,
+      color a.$duration-fast a.$ease-out, border-color a.$duration-fast a.$ease-out;
+
+    &:active {
+      transform: translateY(1px) scale(0.99);
+    }
+
+    &:disabled,
+    &[aria-disabled='true'] {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    &--primary {
+      background-image: a.$gradient-brand;
+      color: #fff;
+      box-shadow: a.$shadow-md;
+
+      &:hover,
+      &:focus-visible {
+        box-shadow: a.$shadow-glow;
+        transform: translateY(-2px);
+      }
+    }
+
+    &--outline {
+      border-color: a.alpha(a.$brand-500, 0.45);
+      background-color: a.alpha(a.$brand-500, 0.06);
+      color: a.$brand-700;
+
+      .dark & {
+        color: a.$brand-300;
+        border-color: a.alpha(a.$brand-300, 0.35);
+      }
+
+      &:hover,
+      &:focus-visible {
+        background-color: a.alpha(a.$brand-500, 0.14);
+        transform: translateY(-2px);
+      }
+    }
+
+    &--ghost {
+      color: a.$ink-600;
+      background-color: transparent;
+
+      &:hover,
+      &:focus-visible {
+        background-color: a.alpha(a.$ink-500, 0.12);
+        color: a.$ink-900;
+
+        .dark & {
+          color: a.$ink-50;
+        }
+      }
+    }
+
+    &--sm {
+      padding: 0.55rem 1rem;
+      font-size: a.fs('xs');
+    }
+
+    &--block {
+      width: 100%;
+    }
+
+    @include a.reduced-motion {
+      transition: none;
+
+      &:hover,
+      &:focus-visible {
+        transform: none;
+      }
+    }
+  }
+
+  .icon-btn {
+    @include a.flex-center;
+
+    width: 2.6rem;
+    height: 2.6rem;
+    border: 1px solid a.$border-light;
+    border-radius: a.radius('md');
+    background-color: a.alpha(#fff, 0.7);
+    color: a.$ink-700;
+    cursor: pointer;
+    transition: background-color a.$duration-fast a.$ease-out,
+      color a.$duration-fast a.$ease-out, border-color a.$duration-fast a.$ease-out;
+
+    .dark & {
+      border-color: a.$border-dark;
+      background-color: a.alpha(a.$ink-850, 0.8);
+      color: a.$ink-300;
+    }
+
+    &:hover,
+    &:focus-visible {
+      border-color: a.alpha(a.$brand-500, 0.5);
+      color: a.$brand-600;
+
+      .dark & {
+        color: a.$accent-400;
+      }
+    }
+  }
+
+  // Tech tag on a project card
+  .tag {
+    @include a.flex(row, 0.35rem, flex-start, center);
+
+    padding: 0.3rem 0.65rem;
+    border-radius: a.radius('pill');
+    border: 1px solid a.alpha(a.$brand-500, 0.22);
+    background-color: a.alpha(a.$brand-500, 0.1);
+    font-family: a.$font-mono;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: a.$brand-700;
+
+    .dark & {
+      border-color: a.alpha(a.$accent-400, 0.24);
+      background-color: a.alpha(a.$accent-500, 0.12);
+      color: a.$accent-400;
+    }
+  }
+
+  // Filter pill used above the project grid
+  .chip {
+    padding: 0.5rem 1.05rem;
+    border-radius: a.radius('pill');
+    border: 1px solid a.$border-light;
+    background-color: a.alpha(#fff, 0.6);
+    font-size: a.fs('sm');
+    font-weight: 600;
+    color: a.$ink-500;
+    cursor: pointer;
+    transition: all a.$duration-fast a.$ease-out;
+
+    .dark & {
+      border-color: a.$border-dark;
+      background-color: a.alpha(a.$ink-850, 0.7);
+      color: a.$ink-300;
+    }
+
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-1px);
+      color: a.$brand-600;
+      border-color: a.alpha(a.$brand-500, 0.45);
+
+      .dark & {
+        color: a.$accent-400;
+      }
+    }
+
+    &[aria-pressed='true'] {
+      background-image: a.$gradient-brand;
+      border-color: transparent;
+      color: #fff;
+      box-shadow: a.$shadow-md;
+    }
+
+    @include a.reduced-motion {
+      transition: none;
+
+      &:hover,
+      &:focus-visible {
+        transform: none;
+      }
+    }
+  }
+
+  .pill-inline {
+    @include a.flex(row, 0.4rem, flex-start, center);
+
+    display: inline-flex;
+    padding: 0.3rem 0.7rem;
+    border-radius: a.radius('pill');
+    background-color: a.alpha(a.$success-500, 0.14);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #047857;
+
+    .dark & {
+      color: #6ee7b7;
+      background-color: a.alpha(a.$success-500, 0.18);
+    }
+  }
+}

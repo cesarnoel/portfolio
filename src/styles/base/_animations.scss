@@ -1,0 +1,113 @@
+@use '../abstracts' as a;
+
+// =============================================================
+//  Keyframes + scroll-reveal primitives
+// =============================================================
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+@keyframes drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(24px, -28px, 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes gradient-pan {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes caret-blink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-120%) skewX(-12deg);
+  }
+  100% {
+    transform: translateX(220%) skewX(-12deg);
+  }
+}
+
+@layer components {
+  // Elements start hidden and are revealed by useRevealOnScroll()
+  .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity a.$duration-slow a.$ease-out,
+      transform a.$duration-slow a.$ease-out;
+    will-change: opacity, transform;
+
+    &.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  // Stagger helper: `.reveal` + `data-delay="1..8"`
+  @for $i from 1 through 8 {
+    .reveal[data-delay='#{$i}'] {
+      transition-delay: #{$i * 90}ms;
+    }
+  }
+
+  .text-gradient {
+    @include a.gradient-text;
+
+    background-size: 200% 200%;
+    animation: gradient-pan 8s ease infinite;
+  }
+
+  .caret::after {
+    content: '';
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    margin-left: 2px;
+    vertical-align: -0.12em;
+    background-color: currentColor;
+    animation: caret-blink 1s steps(1, end) infinite;
+  }
+}
+
+// Users who prefer no motion get the finished state immediately.
+@include a.reduced-motion {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .text-gradient {
+    animation: none !important;
+  }
+}

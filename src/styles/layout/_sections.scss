@@ -1,0 +1,536 @@
+@use '../abstracts' as a;
+
+// =============================================================
+//  Page shell: sections, hero, about, skills
+// =============================================================
+
+@layer components {
+  // ---------- Generic section frame ----------
+  .section {
+    position: relative;
+    padding-block: 4.5rem;
+
+    @include a.media('md') {
+      padding-block: 6.5rem;
+    }
+  }
+
+  .section__eyebrow {
+    @include a.flex(row, 0.55rem, flex-start, center);
+
+    margin-bottom: 0.85rem;
+    font-family: a.$font-mono;
+    font-size: a.fs('xs');
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: a.$brand-600;
+
+    .dark & {
+      color: a.$accent-400;
+    }
+
+    &::before {
+      content: '';
+      width: 1.85rem;
+      height: 2px;
+      border-radius: a.radius('pill');
+      background-image: a.$gradient-brand;
+    }
+  }
+
+  .section__title {
+    font-size: clamp(#{a.fs('3xl')}, 4.6vw, #{a.fs('5xl')});
+    font-weight: 800;
+  }
+
+  .section__lead {
+    max-width: 62ch;
+    margin-top: 1rem;
+    font-size: a.fs('lg');
+    line-height: a.lh('loose');
+    color: a.$ink-500;
+
+    .dark & {
+      color: a.$ink-300;
+    }
+  }
+
+  // ---------- Hero ----------
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding-top: calc(a.$header-height + 3.5rem);
+    padding-bottom: 4rem;
+
+    @include a.media('lg') {
+      display: grid;
+      align-items: center;
+      min-height: 100svh;
+      padding-top: calc(a.$header-height + 2rem);
+      padding-bottom: 5rem;
+    }
+  }
+
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+  }
+
+  // Faint blueprint grid, faded out with a radial mask
+  .hero__grid {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(a.alpha(a.$ink-500, 0.12) 1px, transparent 1px),
+      linear-gradient(90deg, a.alpha(a.$ink-500, 0.12) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 75% 65% at 50% 25%, #000 20%, transparent 78%);
+    -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 25%, #000 20%, transparent 78%);
+
+    .dark & {
+      background-image: linear-gradient(a.alpha(a.$ink-300, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, a.alpha(a.$ink-300, 0.1) 1px, transparent 1px);
+    }
+  }
+
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: 0.5;
+    animation: drift 20s a.$ease-in-out infinite;
+
+    &--one {
+      top: -8rem;
+      left: -6rem;
+      width: 26rem;
+      height: 26rem;
+      background: radial-gradient(circle at 30% 30%, a.$brand-500, transparent 68%);
+    }
+
+    &--two {
+      right: -8rem;
+      bottom: -6rem;
+      width: 30rem;
+      height: 30rem;
+      background: radial-gradient(circle at 60% 40%, a.$accent-500, transparent 68%);
+      animation-delay: -6s;
+    }
+
+    &--three {
+      top: 32%;
+      right: 26%;
+      width: 16rem;
+      height: 16rem;
+      background: radial-gradient(circle at 50% 50%, a.$warning-500, transparent 70%);
+      opacity: 0.24;
+      animation-delay: -11s;
+    }
+
+    @include a.reduced-motion {
+      animation: none;
+    }
+  }
+
+  .hero__title {
+    font-size: clamp(#{a.fs('4xl')}, 7vw, #{a.fs('6xl')});
+    font-weight: 800;
+  }
+
+  .hero__role {
+    @include a.flex(row, 0.35rem, flex-start, baseline);
+
+    margin-top: 1.1rem;
+    font-family: a.$font-mono;
+    font-size: clamp(#{a.fs('lg')}, 2.4vw, #{a.fs('2xl')});
+    color: a.$brand-700;
+
+    .dark & {
+      color: a.$accent-400;
+    }
+  }
+
+  .hero__actions {
+    @include a.flex(row, 0.9rem, flex-start, center);
+
+    flex-wrap: wrap;
+    margin-top: 2.1rem;
+  }
+
+  .hero__meta {
+    @include a.flex(row, 1.4rem, flex-start, center);
+
+    flex-wrap: wrap;
+    margin-top: 2rem;
+    font-size: a.fs('sm');
+    color: a.$ink-500;
+
+    .dark & {
+      color: a.$ink-400;
+    }
+  }
+
+  .hero__status {
+    @include a.flex(row, 0.5rem, flex-start, center);
+  }
+
+  .pulse-dot {
+    position: relative;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background-color: a.$success-500;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 2px solid a.alpha(a.$success-500, 0.5);
+      animation: floaty 2.4s a.$ease-in-out infinite;
+    }
+  }
+
+  // Editor-style panel next to the hero copy
+  .code-card {
+    @include a.surface('xl');
+    @include a.hover-lift(-8px);
+
+    overflow: hidden;
+    font-family: a.$font-mono;
+    font-size: a.fs('sm');
+    box-shadow: a.$shadow-lg;
+
+    &:hover {
+      border-color: a.alpha(a.$brand-500, 0.45);
+    }
+  }
+
+  .code-card__bar {
+    @include a.flex(row, 0.45rem, flex-start, center);
+
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid a.$border-light;
+    background-color: a.alpha(a.$ink-900, 0.04);
+
+    .dark & {
+      border-color: a.$border-dark;
+      background-color: a.alpha(a.$ink-950, 0.5);
+    }
+  }
+
+  .code-card__dot {
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+
+    &--red {
+      background-color: #ff5f57;
+    }
+
+    &--amber {
+      background-color: #febc2e;
+    }
+
+    &--green {
+      background-color: #28c840;
+    }
+  }
+
+  .code-card__file {
+    margin-left: 0.75rem;
+    font-size: a.fs('xs');
+    color: a.$ink-500;
+  }
+
+  .code-card__body {
+    @include a.thin-scrollbar(a.alpha(a.$brand-500, 0.6), transparent);
+
+    margin: 0;
+    padding: 1.15rem 1.25rem;
+    overflow-x: auto;
+    line-height: 1.75;
+    color: a.$ink-700;
+
+    .dark & {
+      color: a.$ink-300;
+    }
+  }
+
+  .tok-key {
+    color: #a855f7;
+  }
+
+  .tok-str {
+    color: #0d9488;
+  }
+
+  .tok-fn {
+    color: a.$brand-600;
+  }
+
+  .tok-comment {
+    color: a.$ink-400;
+    font-style: italic;
+  }
+
+  .dark & {
+    .tok-str {
+      color: #5eead4;
+    }
+
+    .tok-fn {
+      color: a.$brand-300;
+    }
+  }
+
+  // ---------- About ----------
+  .portrait {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    padding: 6px;
+    border-radius: a.radius('xl');
+    background-image: a.$gradient-brand;
+    box-shadow: a.$shadow-lg;
+
+    @include a.media('lg') {
+      animation: floaty 9s a.$ease-in-out infinite;
+    }
+
+    @include a.reduced-motion {
+      animation: none;
+    }
+  }
+
+  .portrait__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    border-radius: calc(#{a.radius('xl')} - 4px);
+  }
+
+  .portrait__badge {
+    @include a.surface('pill');
+
+    position: absolute;
+    right: -0.75rem;
+    bottom: 1.25rem;
+    padding: 0.5rem 0.9rem;
+    font-size: a.fs('xs');
+    font-weight: 600;
+  }
+
+  // ---------- Graphic design works ----------
+  .design-gallery {
+    columns: 1;
+    column-gap: 1rem;
+
+    @include a.media('md') {
+      columns: 2;
+    }
+
+    @include a.media('lg') {
+      columns: 3;
+    }
+  }
+
+  .design-gallery__item {
+    display: block;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    border-radius: a.radius('lg');
+    box-shadow: a.$shadow-md;
+    break-inside: avoid;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      transition: transform a.$duration-slow a.$ease-out;
+    }
+
+    &:hover img,
+    &:focus-visible img {
+      transform: scale(1.04);
+    }
+
+    @include a.reduced-motion {
+      img {
+        transition: none;
+      }
+    }
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+
+    @include a.media('md') {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .stat {
+    @include a.surface('lg');
+    @include a.hover-lift(-4px);
+
+    padding: 1.15rem 1.25rem;
+
+    &:hover {
+      box-shadow: a.$shadow-md;
+    }
+  }
+
+  .stat__value {
+    font-size: a.fs('2xl');
+    font-weight: 800;
+    @include a.gradient-text;
+  }
+
+  .stat__label {
+    margin-top: 0.35rem;
+    font-size: a.fs('xs');
+    line-height: a.lh('snug');
+    color: a.$ink-500;
+
+    .dark & {
+      color: a.$ink-400;
+    }
+  }
+
+  // ---------- Skills ----------
+  .skill-grid {
+    display: grid;
+    gap: 1.35rem;
+
+    @include a.media('md') {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @include a.media('xl') {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .skill-card {
+    @include a.surface('xl');
+    @include a.hover-lift(-6px);
+
+    padding: 1.5rem;
+    height: 100%;
+
+    &:hover {
+      border-color: a.alpha(a.$brand-500, 0.42);
+      box-shadow: a.$shadow-md;
+    }
+  }
+
+  .skill-card__title {
+    @include a.flex(row, 0.6rem, flex-start, center);
+
+    font-size: a.fs('lg');
+    font-weight: 700;
+  }
+
+  .skill-card__icon {
+    @include a.flex-center;
+
+    width: 2.35rem;
+    height: 2.35rem;
+    flex: 0 0 auto;
+    border-radius: a.radius('md');
+    background-image: a.$gradient-soft;
+    color: a.$brand-600;
+
+    .dark & {
+      color: a.$accent-400;
+    }
+  }
+
+  .skill-list {
+    margin: 1.15rem 0 0;
+    padding: 0;
+    list-style: none;
+    @include a.flex(column, 0.95rem);
+  }
+
+  .skill {
+    &:hover .skill-bar__fill {
+      filter: saturate(1.35) brightness(1.05);
+    }
+  }
+
+  .skill__head {
+    @include a.flex(row, 1rem, space-between, baseline);
+
+    font-size: a.fs('sm');
+
+    span:first-child {
+      font-weight: 600;
+    }
+
+    span:last-child {
+      font-family: a.$font-mono;
+      font-size: a.fs('xs');
+      color: a.$ink-500;
+
+      .dark & {
+        color: a.$ink-400;
+      }
+    }
+  }
+
+  .skill-bar {
+    height: 0.4rem;
+    margin-top: 0.5rem;
+    border-radius: a.radius('pill');
+    background-color: a.alpha(a.$ink-500, 0.16);
+    overflow: hidden;
+  }
+
+  .skill-bar__fill {
+    // Level is handed over from React through the --level custom property.
+    width: var(--level, 0%);
+    height: 100%;
+    border-radius: inherit;
+    background-image: a.$gradient-brand;
+    transition: width 1.1s a.$ease-out, filter a.$duration-base a.$ease-out;
+
+    @include a.reduced-motion {
+      transition: none;
+    }
+  }
+
+  // ---------- Call-to-action banner ----------
+  .cta-banner {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(1.75rem, 4vw, 3rem);
+    border-radius: a.radius('xl');
+    background-image: a.$gradient-ink;
+    color: a.$ink-50;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: -40%;
+      left: -10%;
+      width: 60%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, a.alpha(#fff, 0.12), transparent);
+      animation: shine 7s a.$ease-in-out infinite;
+    }
+
+    @include a.reduced-motion {
+      &::after {
+        animation: none;
+      }
+    }
+  }
+
+}

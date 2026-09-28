@@ -1,0 +1,79 @@
+@use '../abstracts' as a;
+
+// =============================================================
+//  Typography & global element defaults
+// =============================================================
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(a.$header-height + 1rem);
+}
+
+body {
+  margin: 0;
+  font-family: a.$font-sans;
+  font-size: a.fs('base');
+  line-height: a.lh('normal');
+  letter-spacing: -0.01em;
+  transition: background-color a.$duration-base a.$ease-out,
+    color a.$duration-base a.$ease-out;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-weight: 700;
+  line-height: a.lh('tight');
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+::selection {
+  background-color: a.alpha(a.$brand-500, 0.28);
+  color: inherit;
+}
+
+:focus-visible {
+  @include a.focus-ring(a.$brand-500, 2px);
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: a.$font-mono;
+  font-size: 0.92em;
+}
+
+// Inline code chips inside prose
+code {
+  padding: 0.15em 0.4em;
+  border-radius: a.radius('sm');
+  background-color: a.alpha(a.$brand-500, 0.12);
+  color: a.$brand-700;
+
+  .dark & {
+    color: a.$brand-300;
+    background-color: a.alpha(a.$brand-400, 0.16);
+  }
+}
+
+// Visible only to assistive technology
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip-path: inset(50%);
+  overflow: hidden;
+  white-space: nowrap;
+}

@@ -1,0 +1,32 @@
+@use 'sass:math';
+@use 'variables' as v;
+
+/// Convert a pixel value to rem (keeps the 16px root contract explicit).
+@function rem($px) {
+  @return math.div($px, 16) * 1rem;
+}
+
+/// Font size token, e.g. `font-size: fs('2xl');`
+@function fs($key) {
+  @return v.token(v.$font-sizes, $key, 'font size');
+}
+
+/// Line-height token.
+@function lh($key) {
+  @return v.token(v.$line-heights, $key, 'line height');
+}
+
+/// Border-radius token.
+@function radius($key) {
+  @return v.token(v.$radii, $key, 'radius');
+}
+
+/// Breakpoint width, e.g. `@media (min-width: bp('lg'))`. Returns a length.
+@function bp($key) {
+  @return v.token(v.$breakpoints, $key, 'breakpoint');
+}
+
+/// Semi-transparent version of a plain colour.
+@function alpha($color, $amount: 0.5) {
+  @return rgba($color, $amount);
+}

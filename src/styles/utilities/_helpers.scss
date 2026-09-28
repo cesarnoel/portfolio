@@ -1,0 +1,132 @@
+@use '../abstracts' as a;
+
+// =============================================================
+//  Small utilities & progressive-enhancement helpers
+// =============================================================
+
+// Keyboard-only "skip to content" link
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  padding: 0.7rem 1.1rem;
+  border-radius: a.radius('md');
+  background-image: a.$gradient-brand;
+  color: #fff;
+  font-size: a.fs('sm');
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: a.$shadow-lg;
+  transform: translateY(-160%);
+  transition: transform a.$duration-base a.$ease-out;
+
+  &:focus-visible {
+    transform: translateY(0);
+  }
+
+  @include a.reduced-motion {
+    transition: none;
+  }
+}
+
+// Back-to-top affordance, rendered only after the user scrolls
+.to-top {
+  @include a.flex-center;
+
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: a.$z-floating;
+  width: 2.9rem;
+  height: 2.9rem;
+  border: 1px solid a.$border-light;
+  border-radius: a.radius('md');
+  background-color: a.alpha(#fff, 0.85);
+  color: a.$ink-700;
+  box-shadow: a.$shadow-md;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: opacity a.$duration-base a.$ease-out, transform a.$duration-base a.$ease-out,
+    visibility a.$duration-base a.$ease-out;
+
+  .dark & {
+    border-color: a.$border-dark;
+    background-color: a.alpha(a.$ink-850, 0.9);
+    color: a.$ink-100;
+  }
+
+  &:hover,
+  &:focus-visible {
+    transform: translateY(-3px);
+    color: a.$brand-600;
+
+    .dark & {
+      color: a.$accent-400;
+    }
+  }
+
+  &--visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  @include a.reduced-motion {
+    transition: none;
+  }
+}
+
+.link-inline {
+  color: a.$brand-600;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: a.alpha(a.$brand-500, 0.4);
+  text-underline-offset: 3px;
+
+  .dark & {
+    color: a.$accent-400;
+  }
+
+  &:hover,
+  &:focus-visible {
+    text-decoration-color: currentColor;
+  }
+}
+
+// Page-wide scrollbar polish
+@supports selector(::-webkit-scrollbar) {
+  body {
+    @include a.thin-scrollbar(a.alpha(a.$brand-500, 0.75), a.alpha(a.$ink-500, 0.12));
+  }
+}
+
+// Print-friendly page: drop the chrome, keep the content
+@media print {
+  .site-header,
+  .to-top,
+  .skip-link,
+  .hero__bg,
+  .cta-banner::after {
+    display: none !important;
+  }
+
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .section {
+    padding-block: 1.25rem !important;
+    break-inside: avoid;
+  }
+
+  a::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.75em;
+    color: #555;
+  }
+}

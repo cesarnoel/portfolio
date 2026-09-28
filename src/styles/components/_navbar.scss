@@ -1,0 +1,244 @@
+@use '../abstracts' as a;
+
+// =============================================================
+//  Sticky header, navigation, mobile drawer, scroll progress
+// =============================================================
+
+@layer components {
+  .site-header {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: a.$z-sticky;
+    border-bottom: 1px solid transparent;
+    transition: background-color a.$duration-base a.$ease-out,
+      border-color a.$duration-base a.$ease-out, box-shadow a.$duration-base a.$ease-out;
+
+    &--scrolled {
+      border-color: a.$border-light;
+      background-color: a.alpha(#fff, 0.78);
+      box-shadow: a.$shadow-sm;
+      backdrop-filter: blur(14px);
+
+      .dark & {
+        border-color: a.$border-dark;
+        background-color: a.alpha(a.$ink-950, 0.72);
+      }
+    }
+  }
+
+  .site-header__inner {
+    @include a.flex(row, 1rem, space-between, center);
+
+    height: a.$header-height;
+  }
+
+  .brand {
+    @include a.flex(row, 0.6rem, flex-start, center);
+
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .brand__mark {
+    @include a.flex-center;
+
+    width: 2.3rem;
+    height: 2.3rem;
+    border-radius: a.radius('sm');
+    background-image: a.$gradient-brand;
+    font-family: a.$font-mono;
+    font-size: a.fs('sm');
+    color: #fff;
+    box-shadow: a.$shadow-md;
+  }
+
+  // Real CNSQ logo mark (transparent PNG) on the brand tile
+  .brand__mark--logo {
+    padding: 0.3rem;
+  }
+
+  .brand__logo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .brand__text {
+    @include a.flex(column, 0);
+
+    line-height: 1.15;
+  }
+
+  .brand__role {
+    font-family: a.$font-mono;
+    font-size: 0.68rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: a.$ink-500;
+
+    .dark & {
+      color: a.$ink-400;
+    }
+  }
+
+  .site-nav {
+    @include a.flex(row, 0.25rem, flex-start, center);
+
+    @include a.media-below('lg') {
+      display: none;
+    }
+  }
+
+  .nav-link {
+    position: relative;
+    padding: 0.5rem 0.85rem;
+    border-radius: a.radius('pill');
+    font-size: a.fs('sm');
+    font-weight: 600;
+    text-decoration: none;
+    color: a.$ink-500;
+    transition: color a.$duration-fast a.$ease-out,
+      background-color a.$duration-fast a.$ease-out;
+
+    .dark & {
+      color: a.$ink-300;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: 0.25rem;
+      width: 0;
+      height: 2px;
+      border-radius: a.radius('pill');
+      background-image: a.$gradient-brand;
+      transform: translateX(-50%);
+      transition: width a.$duration-base a.$ease-out;
+    }
+
+    &:hover,
+    &:focus-visible {
+      color: a.$brand-600;
+      background-color: a.alpha(a.$brand-500, 0.08);
+
+      .dark & {
+        color: a.$accent-400;
+      }
+
+      &::after {
+        width: 1.4rem;
+      }
+    }
+
+    &--active {
+      color: a.$brand-700;
+
+      .dark & {
+        color: a.$accent-400;
+      }
+
+      &::after {
+        width: 1.4rem;
+      }
+    }
+  }
+
+  .site-header__actions {
+    @include a.flex(row, 0.6rem, flex-end, center);
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+
+    @include a.media('lg') {
+      display: none;
+    }
+  }
+
+  // Mobile drawer
+  .nav-drawer {
+    position: fixed;
+    inset: a.$header-height 0 auto;
+    z-index: a.$z-overlay;
+    padding: 1rem 1.25rem 1.75rem;
+    border-bottom: 1px solid a.$border-light;
+    background-color: a.alpha(#fff, 0.96);
+    box-shadow: a.$shadow-lg;
+    backdrop-filter: blur(16px);
+    transform-origin: top;
+    animation: fade-down a.$duration-base a.$ease-out both;
+
+    .dark & {
+      border-color: a.$border-dark;
+      background-color: a.alpha(a.$ink-950, 0.96);
+    }
+
+    @include a.media('lg') {
+      display: none;
+    }
+
+    @include a.reduced-motion {
+      animation: none;
+    }
+  }
+
+  .nav-drawer__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    @include a.flex(column, 0.35rem);
+  }
+
+  .nav-drawer__link {
+    display: block;
+    padding: 0.85rem 1rem;
+    border-radius: a.radius('md');
+    font-weight: 600;
+    text-decoration: none;
+    color: a.$ink-700;
+
+    .dark & {
+      color: a.$ink-100;
+    }
+
+    &:hover,
+    &:focus-visible,
+    &[aria-current='true'] {
+      background-color: a.alpha(a.$brand-500, 0.12);
+      color: a.$brand-700;
+
+      .dark & {
+        color: a.$accent-400;
+      }
+    }
+  }
+
+  .scroll-progress {
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: var(--progress, 0%);
+    height: 2px;
+    background-image: a.$gradient-brand;
+    transition: width 120ms linear;
+
+    @include a.reduced-motion {
+      transition: none;
+    }
+  }
+}
+
+@keyframes fade-down {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scaleY(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+  }
+}

@@ -1,0 +1,240 @@
+@use '../abstracts' as a;
+
+// =============================================================
+//  Cards: generic surface, project cards, info lists
+// =============================================================
+
+@layer components {
+  .card {
+    @include a.surface('xl');
+
+    padding: 1.5rem;
+  }
+
+  .card--glow {
+    border-color: a.alpha(a.$brand-500, 0.35);
+    box-shadow: a.$shadow-glow;
+  }
+
+  .design-service {
+    @include a.surface('xl');
+
+    height: 100%;
+    padding: 1.25rem 1.35rem;
+  }
+
+  .project-grid {
+    display: grid;
+    gap: 1.5rem;
+
+    @include a.media('md') {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .project-card {
+    @include a.surface('xl');
+    @include a.hover-lift(-7px);
+
+    display: grid;
+    grid-template-rows: auto 1fr;
+    overflow: hidden;
+    padding: 0;
+
+    &:hover,
+    &:focus-within {
+      border-color: a.alpha(a.$brand-500, 0.45);
+      box-shadow: a.$shadow-lg;
+    }
+
+    &:hover .project-card__thumb {
+      transform: scale(1.06) rotate(-1deg);
+    }
+
+    &:hover .project-card__arrow {
+      transform: translate(3px, -3px);
+    }
+  }
+
+  // Real screenshot of the shipped site; the gradient stays as a loading backdrop
+  .project-card__media {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    background-image: a.$gradient-brand;
+  }
+
+  .project-card__thumb {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    transition: transform a.$duration-slow a.$ease-out;
+
+    @include a.reduced-motion {
+      transition: none;
+    }
+  }
+
+  .project-card__year {
+    position: absolute;
+    top: 0.85rem;
+    right: 0.85rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: a.radius('pill');
+    background-color: a.alpha(#000, 0.42);
+    font-family: a.$font-mono;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #fff;
+    backdrop-filter: blur(4px);
+  }
+
+  .project-card__body {
+    @include a.flex(column, 0.85rem);
+
+    padding: 1.35rem 1.4rem 1.5rem;
+  }
+
+  .project-card__head {
+    @include a.flex(row, 0.75rem, space-between, flex-start);
+  }
+
+  .project-card__title {
+    font-size: a.fs('xl');
+    font-weight: 700;
+  }
+
+  .project-card__role {
+    font-size: a.fs('xs');
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: a.$ink-400;
+  }
+
+  .project-card__blurb {
+    font-size: a.fs('sm');
+    line-height: a.lh('loose');
+    color: a.$ink-500;
+
+    .dark & {
+      color: a.$ink-300;
+    }
+  }
+
+  .project-card__highlights {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    @include a.flex(column, 0.45rem);
+
+    font-size: a.fs('sm');
+
+    li {
+      @include a.flex(row, 0.55rem, flex-start, flex-start);
+    }
+
+    li::before {
+      content: '▸';
+      color: a.$brand-600;
+      line-height: 1.5;
+
+      .dark & {
+        color: a.$accent-400;
+      }
+    }
+  }
+
+  .project-card__tags {
+    @include a.flex(row, 0.4rem, flex-start, center);
+
+    flex-wrap: wrap;
+  }
+
+  .project-card__footer {
+    @include a.flex(row, 1rem, space-between, center);
+
+    margin-top: auto;
+    padding-top: 0.5rem;
+  }
+
+  .project-card__links {
+    @include a.flex(row, 0.9rem, flex-start, center);
+
+    font-size: a.fs('sm');
+  }
+
+  .project-card__link {
+    @include a.flex(row, 0.35rem, flex-start, center);
+
+    font-weight: 600;
+    color: a.$brand-600;
+    text-decoration: none;
+    transition: color a.$duration-fast a.$ease-out, gap a.$duration-fast a.$ease-out;
+
+    .dark & {
+      color: a.$accent-400;
+    }
+
+    &:hover,
+    &:focus-visible {
+      gap: 0.6rem;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+  }
+
+  .project-card__arrow {
+    transition: transform a.$duration-fast a.$ease-out;
+
+    @include a.reduced-motion {
+      transition: none;
+    }
+  }
+
+  .empty-state {
+    padding: 3rem 1.5rem;
+    border: 1px dashed a.alpha(a.$ink-500, 0.35);
+    border-radius: a.radius('xl');
+    text-align: center;
+    color: a.$ink-500;
+
+    .dark & {
+      color: a.$ink-400;
+    }
+  }
+
+  // Bullet list used in the About section
+  .check-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    @include a.flex(column, 0.7rem);
+
+    font-size: a.fs('sm');
+    line-height: a.lh('snug');
+
+    li {
+      @include a.flex(row, 0.65rem, flex-start, flex-start);
+    }
+  }
+
+  .check-list__icon {
+    @include a.flex-center;
+
+    width: 1.35rem;
+    height: 1.35rem;
+    flex: 0 0 auto;
+    margin-top: 0.1rem;
+    border-radius: 50%;
+    background-color: a.alpha(a.$success-500, 0.16);
+    color: #047857;
+
+    .dark & {
+      color: #6ee7b7;
+    }
+  }
+}

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/media/cnsq-logo-mark.png" />
+    <title>CNSQ Dev – Online Portfolio of Cesar Noel Quiñon</title>
+    <meta
+      name="description"
+      content="Online portfolio of Cesar Noel Quiñon, Senior WordPress Engineer specializing in custom WordPress websites, theme development, and robust maintenance solutions tailored for your unique business needs."
+    />
+    <meta name="theme-color" content="#0f172a" />
+
+    <!--
+      Applied before React mounts so a dark-mode visitor never sees a flash of
+      the light theme. Reads the same localStorage key as useTheme().
+    -->
+    <script>
+      (function () {
+        try {
+          var stored = window.localStorage.getItem('portfolio-theme');
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var isDark = stored ? stored === 'dark' : prefersDark;
+          document.documentElement.classList.toggle('dark', isDark);
+          document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+        } catch (error) {
+          /* storage unavailable - fall back to the light theme */
+        }
+      })();
+    </script>
+
+    <!-- Social preview -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Cesar Noel Quiñon — Senior WordPress Engineer" />
+    <meta
+      property="og:description"
+      content="Custom WordPress websites, theme development, robust maintenance solutions and graphic design works — web, print and e-book design."
+    />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!--
+      Progressive enhancement: if JavaScript is disabled the app still renders a
+      readable, styled fallback hero instead of a blank page.
+    -->
+    <noscript>
+      <style>
+        #root { display: none; }
+      </style>
+    </noscript>
+  </head>
+  <body class="bg-ink-50 text-ink-900 antialiased dark:bg-ink-950 dark:text-ink-50">
+    <noscript>
+      <main class="mx-auto flex min-h-screen max-w-3xl flex-col justify-center gap-4 p-8">
+        <h1 class="text-3xl font-extrabold">Cesar Noel Quiñon &mdash; Senior WordPress Engineer</h1>
+        <p class="leading-relaxed">
+          This portfolio is built with React, Tailwind CSS and SASS and needs JavaScript
+          enabled. Reach me directly at
+          <a class="font-semibold text-brand-600 underline" href="mailto:cnsqdesigns@gmail.com">
+            cnsqdesigns@gmail.com </a
+          >.
+        </p>
+      </main>
+    </noscript>
+
+    <div id="root"></div>
+
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

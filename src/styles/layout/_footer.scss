@@ -1,0 +1,122 @@
+@use '../abstracts' as a;
+
+// =============================================================
+//  Site footer
+// =============================================================
+
+@layer components {
+  .site-footer {
+    position: relative;
+    margin-top: 2rem;
+    padding-block: 3rem 2rem;
+    border-top: 1px solid a.$border-light;
+    background-color: a.alpha(a.$ink-100, 0.7);
+
+    .dark & {
+      border-color: a.$border-dark;
+      background-color: a.alpha(a.$ink-900, 0.6);
+    }
+  }
+
+  .site-footer__grid {
+    display: grid;
+    gap: 2rem;
+
+    @include a.media('md') {
+      grid-template-columns: 1.4fr 1fr 1fr;
+    }
+  }
+
+  .site-footer__heading {
+    font-size: a.fs('sm');
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .site-footer__list {
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+    @include a.flex(column, 0.6rem);
+
+    font-size: a.fs('sm');
+  }
+
+  .site-footer__link {
+    color: a.$ink-500;
+    text-decoration: none;
+    transition: color a.$duration-fast a.$ease-out;
+
+    .dark & {
+      color: a.$ink-400;
+    }
+
+    &:hover,
+    &:focus-visible {
+      color: a.$brand-600;
+
+      .dark & {
+        color: a.$accent-400;
+      }
+    }
+  }
+
+  .site-footer__bottom {
+    @include a.flex(row, 1rem, space-between, center);
+
+    flex-wrap: wrap;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid a.$border-light;
+    font-size: a.fs('xs');
+    color: a.$ink-500;
+
+    .dark & {
+      border-color: a.$border-dark;
+      color: a.$ink-400;
+    }
+  }
+
+  .social-row {
+    @include a.flex(row, 0.6rem, flex-start, center);
+
+    flex-wrap: wrap;
+  }
+
+  .social-link {
+    @include a.flex-center;
+
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: a.radius('md');
+    border: 1px solid a.$border-light;
+    background-color: a.alpha(#fff, 0.6);
+    color: a.$ink-700;
+    text-decoration: none;
+    transition: transform a.$duration-fast a.$ease-out,
+      color a.$duration-fast a.$ease-out, background-color a.$duration-fast a.$ease-out;
+
+    .dark & {
+      border-color: a.$border-dark;
+      background-color: a.alpha(a.$ink-850, 0.75);
+      color: a.$ink-300;
+    }
+
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-3px);
+      background-image: a.$gradient-brand;
+      color: #fff;
+    }
+
+    @include a.reduced-motion {
+      transition: none;
+
+      &:hover,
+      &:focus-visible {
+        transform: none;
+      }
+    }
+  }
+}

@@ -1,0 +1,131 @@
+@use 'sass:map';
+@use 'variables' as v;
+@use 'functions' as f;
+
+// =============================================================
+//  Reusable mixins
+// =============================================================
+
+/// Mobile-first media query: `@include media('lg') { ... }`
+@mixin media($key) {
+  @media (min-width: f.bp($key)) {
+    @content;
+  }
+}
+
+/// Desktop-down media query (0.02px gap avoids overlap at the boundary).
+@mixin media-below($key) {
+  @media (max-width: (f.bp($key) - 0.02px)) {
+    @content;
+  }
+}
+
+/// Respect the user's motion preference.
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+@mixin flex($direction: row, $gap: 0, $justify: flex-start, $align: stretch) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  @if $gap != 0 {
+    gap: $gap;
+  }
+}
+
+@mixin flex-center($direction: row, $gap: 0) {
+  @include flex($direction, $gap, center, center);
+}
+
+/// Visible, accessible focus treatment.
+@mixin focus-ring($color: v.$brand-500, $offset: 3px) {
+  outline: 2px solid $color;
+  outline-offset: $offset;
+}
+
+/// Gradient clipped to the glyphs.
+@mixin gradient-text($gradient: v.$gradient-brand) {
+  background-image: $gradient;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/// Frosted card surface with automatic dark-mode colours.
+@mixin surface($radius-key: 'xl', $blur: 14px) {
+  border-radius: f.radius($radius-key);
+  border: 1px solid v.$border-light;
+  background-color: v.$surface-light;
+  box-shadow: v.$shadow-sm;
+  backdrop-filter: blur($blur);
+  .dark & {
+    border-color: v.$border-dark;
+    background-color: v.$surface-dark;
+    box-shadow: none;
+  }
+}
+
+/// Lift on hover / keyboard focus, disabled for reduced-motion users.
+@mixin hover-lift($distance: -6px) {
+  transition: transform v.$duration-base v.$ease-out,
+    box-shadow v.$duration-base v.$ease-out, border-color v.$duration-base v.$ease-out;
+
+  &:hover,
+  &:focus-visible {
+    transform: translateY($distance);
+  }
+
+  @include reduced-motion {
+    transition: none;
+
+    &:hover,
+    &:focus-visible {
+      transform: none;
+    }
+  }
+}
+
+/// Clamp text to N lines with an ellipsis (vendor prefix required by spec draft).
+@mixin clamp-lines($lines: 3) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/// Thin, theme-aware scrollbar.
+@mixin thin-scrollbar($thumb: v.$brand-500, $track: transparent) {
+  scrollbar-width: thin;
+  scrollbar-color: $thumb $track;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $track;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: f.radius('pill');
+    background-color: $thumb;
+  }
+}
+
+/// Decorative radial glow used behind hero/section headings.
+@mixin glow($color: v.$brand-500, $size: 320px, $opacity: 0.28) {
+  content: '';
+  position: absolute;
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, f.alpha($color, $opacity), transparent 70%);
+  filter: blur(12px);
+  pointer-events: none;
+}

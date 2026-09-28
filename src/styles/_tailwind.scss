@@ -1,0 +1,7 @@
+// Tailwind directives live in their own module so `main.scss` can `@use` them
+// FIRST. Sass emits the CSS of a used module before the CSS that follows the
+// `@use` rule, which guarantees Tailwind's preflight never overrides our
+// component classes.
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

@@ -1,0 +1,161 @@
+@use '../abstracts' as a;
+
+// =============================================================
+//  Experience timeline
+// =============================================================
+
+@layer components {
+  .timeline {
+    position: relative;
+    margin: 0;
+    padding: 0 0 0 1.75rem;
+    list-style: none;
+
+    // Vertical rail
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0.6rem;
+      bottom: 0.6rem;
+      left: 0.42rem;
+      width: 2px;
+      border-radius: a.radius('pill');
+      background-image: linear-gradient(
+        to bottom,
+        a.alpha(a.$brand-500, 0.65),
+        a.alpha(a.$accent-500, 0.45),
+        transparent
+      );
+    }
+
+    @include a.media('md') {
+      padding-left: 2.25rem;
+
+      &::before {
+        left: 0.6rem;
+      }
+    }
+  }
+
+  .timeline__item {
+    position: relative;
+    padding-bottom: 2rem;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+
+  .timeline__marker {
+    position: absolute;
+    top: 0.55rem;
+    left: -1.75rem;
+    width: 0.9rem;
+    height: 0.9rem;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    background-image: a.$gradient-brand;
+    box-shadow: a.$shadow-sm;
+
+    .dark & {
+      border-color: a.$ink-950;
+    }
+
+    @include a.media('md') {
+      left: -2.25rem;
+    }
+  }
+
+  .timeline__card {
+    @include a.surface('lg');
+    @include a.hover-lift(-4px);
+
+    padding: 1.35rem 1.45rem;
+
+    &:hover {
+      border-color: a.alpha(a.$brand-500, 0.4);
+      box-shadow: a.$shadow-md;
+    }
+  }
+
+  .timeline__head {
+    @include a.flex(row, 0.75rem, space-between, flex-start);
+
+    flex-wrap: wrap;
+  }
+
+  .timeline__role {
+    font-size: a.fs('lg');
+    font-weight: 700;
+  }
+
+  .timeline__company {
+    margin-top: 0.2rem;
+    font-size: a.fs('sm');
+    font-weight: 600;
+    color: a.$brand-600;
+
+    .dark & {
+      color: a.$accent-400;
+    }
+  }
+
+  .timeline__period {
+    padding: 0.3rem 0.7rem;
+    border-radius: a.radius('pill');
+    background-color: a.alpha(a.$ink-500, 0.12);
+    font-family: a.$font-mono;
+    font-size: 0.72rem;
+    font-weight: 600;
+    white-space: nowrap;
+    color: a.$ink-500;
+
+    .dark & {
+      color: a.$ink-300;
+    }
+  }
+
+  .timeline__summary {
+    margin-top: 0.85rem;
+    font-size: a.fs('sm');
+    line-height: a.lh('loose');
+    color: a.$ink-500;
+
+    .dark & {
+      color: a.$ink-300;
+    }
+  }
+
+  .timeline__bullets {
+    margin: 0.9rem 0 0;
+    padding: 0;
+    list-style: none;
+    @include a.flex(column, 0.5rem);
+
+    font-size: a.fs('sm');
+
+    li {
+      @include a.flex(row, 0.6rem, flex-start, flex-start);
+      line-height: a.lh('snug');
+    }
+
+    li::before {
+      content: '';
+      flex: 0 0 auto;
+      width: 0.4rem;
+      height: 0.4rem;
+      margin-top: 0.5rem;
+      border-radius: 50%;
+      background-image: a.$gradient-brand;
+    }
+  }
+
+  .timeline__stack {
+    @include a.flex(row, 0.4rem, flex-start, center);
+
+    flex-wrap: wrap;
+    margin-top: 1.1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed a.alpha(a.$ink-500, 0.28);
+  }
+}
