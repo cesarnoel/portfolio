@@ -5,7 +5,7 @@ import Section from './Section';
 
 /**
  * Graphic Design Works — real copy and artwork from the companion gallery
- * at https://cnsqdemo.my.canva.site/cnsqdesigns. Images live in
+ * at https://cnsqdesigns.netlify.app. Images live in
  * public/media/designs and are lazy-loaded in a masonry-style column layout.
  */
 export default function Designs() {
@@ -70,7 +70,7 @@ export default function Designs() {
           target="_blank"
           rel="noreferrer noopener"
         >
-          View the full gallery on Canva
+          View the full gallery
           <ArrowUpRightIcon size={16} />
         </a>
       </Reveal>

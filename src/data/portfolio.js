@@ -3,7 +3,7 @@
 //  Single source of truth for every section. All copy is sourced
 //  from the live portfolio at https://cnsqwordpressengr.netlify.app
 //  and the graphic-design gallery at
-//  https://cnsqdemo.my.canva.site/cnsqdesigns
+//  https://cnsqdesigns.netlify.app
 // =============================================================
 
 export const profile = {
@@ -39,7 +39,7 @@ export const profile = {
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/engrcesarnoel/', icon: 'linkedin' },
     {
       label: 'Graphic Design Works',
-      href: 'https://cnsqdemo.my.canva.site/cnsqdesigns',
+      href: 'https://cnsqdesigns.netlify.app',
       icon: 'external',
     },
     { label: 'Email', href: 'mailto:cnsqdesigns@gmail.com', icon: 'mail' },
@@ -216,8 +216,8 @@ export const projects = [
   },
 ];
 
-// Graphic Design Works — content from the companion Canva gallery
-// (https://cnsqdemo.my.canva.site/cnsqdesigns). Only genuine client/design
+// Graphic Design Works — content from the companion gallery
+// (https://cnsqdesigns.netlify.app). Only genuine client/design
 // pieces are shown below: stock Canva template fills (hero banner, portfolio
 // sample photos, abstract backgrounds, the fox illustration, section header
 // art and the contact photo) are intentionally excluded.
@@ -245,7 +245,7 @@ export const designWorks = {
       description: 'Creating E-book and E-book covers for Clients.',
     },
   ],
-  galleryUrl: 'https://cnsqdemo.my.canva.site/cnsqdesigns',
+  galleryUrl: 'https://cnsqdesigns.netlify.app',
   images: [
     {
       src: '/media/designs/web-design-coffee-site.jpg',
