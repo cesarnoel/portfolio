@@ -22,7 +22,7 @@ export const profile = {
   portraitAlt: 'Portrait of Cesar Noel Quiñon',
   logo: '/media/cnsq-logo.png',
   logoMark: '/media/cnsq-logo-mark.png',
-  sinceBadge: '15+ years experience',
+  sinceBadge: '18+ years experience',
   bio: [
     "Hi! I'm Cesar Noel Quiñon, a WordPress developer with more than 18 years of experience specializing in custom themes, WooCommerce stores, and ongoing maintenance for businesses in the Philippines.",
     'I build websites from the ground up. Custom themes, responsive layouts, and WooCommerce setups that work properly. When existing sites need fixing, I handle security hardening, speed optimization, and update management so owners can run their business instead.',
