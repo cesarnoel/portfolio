@@ -17,7 +17,7 @@ export const profile = {
   email: 'cnsqdesigns@gmail.com',
   replyNote: 'Responds to all inquiries as soon as possible',
   tagline:
-    'Senior WordPress Engineer based in Davao City, Philippines. I build custom WordPress sites and WooCommerce stores, then keep them fast, secure, and running — so you can focus on the business instead of the website.',
+    'Full-Stack Web Engineer based in Davao City, Philippines. I build custom WordPress sites and WooCommerce stores, then keep them fast, secure, and running — so you can focus on the business instead of the website.',
   portrait: '/media/cesar-noel-quinon.jpg',
   portraitAlt: 'Portrait of Cesar Noel Quiñon',
   logo: '/media/cnsq-logo.png',
