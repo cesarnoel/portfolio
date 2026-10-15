@@ -59,15 +59,16 @@ export const heroRoles = [
 // Rendered in the hero's editor panel
 export const codeSnippet = [
   'export const stack = {',
-  "  cms: 'WordPress & WooCommerce',",
-  "  language: 'PHP & MySQL',",
+  "  cms: 'WordPress, WooCommerce & Webflow',",
+  "  language: 'PHP & MySQL & JavaScript',",
+  "  framework: 'ReactJS',",
   "  style: 'HTML5 & CSS3',",
-  "  design: 'Canva & Webflow',",
+  "  design: 'Canva & Figma',",
   '};',
 ];
 
 export const stats = [
-  { value: 18, suffix: '+', label: 'Years of WordPress development experience' },
+  { value: 18, suffix: '+', label: 'Years of Full-Stack Development with WordPress Development specialty' },
   { value: 18, suffix: '+', label: 'Years of graphic design experience' },
   { value: 7, suffix: '', label: 'Featured development projects' },
   { value: 8, suffix: '', label: 'Graphic design pieces in the gallery' },
@@ -75,33 +76,33 @@ export const stats = [
 
 export const skillGroups = [
   {
-    title: 'Core: WordPress builds and upkeep',
+    title: 'Core: WordPress Builds and Upkeep',
     icon: 'layers',
     skills: [
       { name: 'WordPress', level: 98 },
-      { name: 'Theme customization', level: 95 },
+      { name: 'Theme Customization', level: 95 },
       { name: 'PHP & MySQL', level: 92 },
       { name: 'WooCommerce', level: 88 },
     ],
   },
   {
-    title: 'Core: Front-end and platforms',
+    title: 'Core: Front-End and Platforms',
     icon: 'code',
     skills: [
       { name: 'HTML5', level: 96 },
-      { name: 'CSS3 & responsive design', level: 95 },
-      { name: 'JavaScript', level: 85 },
+      { name: 'CSS3 & Responsive Design', level: 95 },
+      { name: 'JavaScript & ReactJS', level: 85 },
       { name: 'Webflow', level: 80 },
     ],
   },
   {
-    title: 'Core: Design and media',
+    title: 'Core: Design and Media',
     icon: 'sparkles',
     skills: [
-      { name: 'Graphic design', level: 94 },
-      { name: 'Canva', level: 92 },
-      { name: 'Web design', level: 90 },
-      { name: 'E-book & print design', level: 88 },
+      { name: 'Graphic Design', level: 94 },
+      { name: 'Canva & Adobe Creative Suite', level: 92 },
+      { name: 'UI/UX Design', level: 90 },
+      { name: 'E-Book & Print Design', level: 88 },
     ],
   },
 ];
