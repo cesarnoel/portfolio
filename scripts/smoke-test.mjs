@@ -63,7 +63,7 @@ const presenceChecks = [
   ['project screenshot rendered', /\/media\/projects\/screenshot-1\.jpg/],
   ['portrait rendered', /\/media\/cesar-noel-quinon\.jpg/],
   ['design gallery rendered', /design-gallery__item/],
-  ['skill bar receives --level', /--level:98%/],
+  ['skill bar receives --level', /--level:92%/],
   ['skill group icon rendered', /skill-card__icon/],
   ['timeline entries rendered', /timeline__card/],
   ['contact form field rendered', /id="contact-message"/],

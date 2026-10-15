@@ -157,6 +157,8 @@
     font-size: a.fs('sm');
     font-weight: 600;
     color: a.$ink-500;
+    white-space: nowrap;
+    flex: 0 0 auto;
     cursor: pointer;
     transition: all a.$duration-fast a.$ease-out;
 
@@ -211,5 +213,22 @@
       color: #6ee7b7;
       background-color: a.alpha(a.$success-500, 0.18);
     }
+  }
+
+  // Horizontally scrollable filter chip group (mobile-friendly).
+  // Stays on one line with momentum scroll; fades the right edge as a hint.
+  .filter-scroll {
+    @include a.flex(row, 0.5rem, flex-start, center);
+    @include a.thin-scrollbar(transparent, transparent);
+
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+    scroll-padding-inline: 0.25rem;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+    mask-image: linear-gradient(90deg, #000 calc(100% - 2rem), transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 2rem), transparent 100%);
   }
 }

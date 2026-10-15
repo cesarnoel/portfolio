@@ -43,8 +43,8 @@ export default function ProjectCard({ project, delay = 0 }) {
         <p className="project-card__blurb">{project.tagline}</p>
 
         <ul className="project-card__highlights">
-          {project.highlights.map((highlight) => (
-            <li key={highlight.slice(0, 24)}>{highlight}</li>
+          {project.highlights.map((highlight, index) => (
+            <li key={`${project.id}-highlight-${index}`}>{highlight}</li>
           ))}
         </ul>
 

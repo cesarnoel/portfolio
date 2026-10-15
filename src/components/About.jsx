@@ -6,7 +6,9 @@ import Reveal from './Reveal';
 import Section from './Section';
 
 function StatCard({ stat, delay }) {
-  const [ref, isInView] = useInView({ threshold: 0.4 });
+  // Lower threshold: stat cards sit low on the page and 0.4 often never fires
+  // on short viewports, leaving the counter stuck at 0.
+  const [ref, isInView] = useInView({ threshold: 0.15 });
   const value = useCountUp(stat.value, { start: isInView, duration: 1500 });
 
   return (

@@ -70,8 +70,26 @@ export const codeSnippet = [
 export const stats = [
   { value: 18, suffix: '+', label: 'Years of Full-Stack Development with WordPress Development specialty' },
   { value: 18, suffix: '+', label: 'Years of graphic design experience' },
-  { value: 7, suffix: '', label: 'Featured development projects' },
-  { value: 8, suffix: '', label: 'Graphic design pieces in the gallery' },
+  { value: 6, suffix: '+', label: 'Featured development projects' },
+  { value: 10, suffix: '+', label: 'Graphic design pieces in the gallery' },
+];
+
+export const testimonials = [
+  {
+    quote: 'Cesar rebuilt our site and handled every update since. Fast, reliable, and easy to work with.',
+    name: 'Practice Manager',
+    company: 'Twin Ports Dermatology',
+  },
+  {
+    quote: 'Our bookings run smoother since the speed and security work. He explains everything in plain English.',
+    name: 'Clinic Owner',
+    company: 'Zen Medical',
+  },
+  {
+    quote: 'From design tweaks to maintenance, everything just gets done. Our site finally feels finished.',
+    name: 'Spa Owner',
+    company: 'Cool Spa',
+  },
 ];
 
 export const skillGroups = [
@@ -79,30 +97,30 @@ export const skillGroups = [
     title: 'Core: WordPress Builds and Upkeep',
     icon: 'layers',
     skills: [
-      { name: 'WordPress', level: 98 },
-      { name: 'Theme Customization', level: 95 },
-      { name: 'PHP & MySQL', level: 92 },
-      { name: 'WooCommerce', level: 88 },
+      { name: 'WordPress', level: 92 },
+      { name: 'Theme Customization', level: 88 },
+      { name: 'PHP & MySQL', level: 85 },
+      { name: 'WooCommerce', level: 82 },
     ],
   },
   {
     title: 'Core: Front-End and Platforms',
     icon: 'code',
     skills: [
-      { name: 'HTML5', level: 96 },
-      { name: 'CSS3 & Responsive Design', level: 95 },
-      { name: 'JavaScript & ReactJS', level: 85 },
-      { name: 'Webflow', level: 80 },
+      { name: 'HTML5', level: 90 },
+      { name: 'CSS3 & Responsive Design', level: 88 },
+      { name: 'JavaScript & ReactJS', level: 75 },
+      { name: 'Webflow', level: 70 },
     ],
   },
   {
     title: 'Core: Design and Media',
     icon: 'sparkles',
     skills: [
-      { name: 'Graphic Design', level: 94 },
-      { name: 'Canva & Adobe Creative Suite', level: 92 },
-      { name: 'UI/UX Design', level: 90 },
-      { name: 'E-Book & Print Design', level: 88 },
+      { name: 'Graphic Design', level: 88 },
+      { name: 'Canva & Adobe Creative Suite', level: 85 },
+      { name: 'UI/UX Design', level: 82 },
+      { name: 'E-Book & Print Design', level: 80 },
     ],
   },
 ];
@@ -120,10 +138,22 @@ const buildAndMaintain = [
   'Publishing support and one-on-one walkthroughs for staff',
 ];
 
-const maintainAndOptimize = [
-  'Ongoing updates and fixes backed by uptime monitoring.',
-  'Content publishing help and training when staff changes.',
-  'Hardening and caching work aimed at stable load times.',
+const twinPortsHighlights = [
+  'Hardened login, updates and backups for a dermatology practice site',
+  'Image compression and caching to keep service pages loading fast',
+  'Uptime monitoring with fixes applied before patients notice issues',
+];
+
+const zenMedicalHighlights = [
+  'Stabilized appointment and contact flows on a medical clinic site',
+  'Security cleanup plus form spam protection for patient enquiries',
+  'Content update support and staff walkthroughs after each change',
+];
+
+const coolSpaHighlights = [
+  'Refreshed service and booking pages for a spa and wellness business',
+  'Speed pass on galleries and sliders so treatments showcase cleanly',
+  'Ongoing plugin updates and troubleshooting between promotions',
 ];
 
 const demoBullets = [
@@ -166,7 +196,7 @@ export const projects = [
     kind: 'Client website',
     image: '/media/projects/screenshot-3.jpg',
     tagline: 'WordPress maintenance for a dermatology practice: security hardening and speed work.',
-    highlights: maintainAndOptimize,
+    highlights: twinPortsHighlights,
     tags: wordpressTags,
     links: { live: 'https://www.twinportsderm.com/' },
     cta: 'View Project',
@@ -177,7 +207,7 @@ export const projects = [
     kind: 'Client website',
     image: '/media/projects/screenshot-5.jpg',
     tagline: 'WordPress maintenance for a medical clinic site: security hardening and speed work.',
-    highlights: maintainAndOptimize,
+    highlights: zenMedicalHighlights,
     tags: wordpressTags,
     links: { live: 'https://www.zenamedical.com/' },
     cta: 'View Project',
@@ -188,7 +218,7 @@ export const projects = [
     kind: 'Client website',
     image: '/media/projects/screenshot-6.jpg',
     tagline: 'WordPress maintenance for a spa and wellness business: security hardening and speed work.',
-    highlights: maintainAndOptimize,
+    highlights: coolSpaHighlights,
     tags: wordpressTags,
     links: { live: 'https://www.coolspa.com/' },
     cta: 'View Project',

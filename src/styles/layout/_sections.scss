@@ -137,14 +137,18 @@
   .hero__title {
     font-size: clamp(#{a.fs('4xl')}, 7vw, #{a.fs('6xl')});
     font-weight: 800;
+    overflow-wrap: anywhere;
+    text-wrap: balance;
   }
 
   .hero__role {
     @include a.flex(row, 0.35rem, flex-start, baseline);
 
     margin-top: 1.1rem;
+    min-height: 2.2em;
     font-family: a.$font-mono;
     font-size: clamp(#{a.fs('lg')}, 2.4vw, #{a.fs('2xl')});
+    overflow-wrap: anywhere;
     color: a.$brand-700;
 
     .dark & {
@@ -503,6 +507,88 @@
 
     @include a.reduced-motion {
       transition: none;
+    }
+  }
+
+  // ---------- Testimonials ----------
+  .testimonial-grid {
+    display: grid;
+    gap: 1.25rem;
+
+    @include a.media('md') {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .testimonial-card {
+    @include a.surface('xl');
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+    margin: 0;
+    padding: 1.4rem 1.35rem;
+  }
+
+  .testimonial-card__quote {
+    font-size: a.fs('sm');
+    line-height: a.lh('loose');
+    color: a.$ink-600;
+
+    .dark & {
+      color: a.$ink-200;
+    }
+  }
+
+  .testimonial-card__author {
+    @include a.flex(column, 0.15rem);
+
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px solid a.$border-light;
+
+    .dark & {
+      border-color: a.$border-dark;
+    }
+  }
+
+  .testimonial-card__name {
+    font-size: a.fs('sm');
+    font-weight: 700;
+  }
+
+  .testimonial-card__company {
+    font-size: a.fs('xs');
+    color: a.$ink-500;
+
+    .dark & {
+      color: a.$ink-400;
+    }
+  }
+
+  // ---------- Booking card (Contact aside) ----------
+  .booking-card {
+    @include a.surface('xl');
+
+    margin-top: 1rem;
+    padding: 1.25rem 1.3rem;
+  }
+
+  .booking-card__title {
+    font-size: a.fs('base');
+    font-weight: 700;
+  }
+
+  .booking-card__text {
+    margin-top: 0.4rem;
+    margin-bottom: 1rem;
+    font-size: a.fs('sm');
+    line-height: a.lh('loose');
+    color: a.$ink-500;
+
+    .dark & {
+      color: a.$ink-300;
     }
   }
 

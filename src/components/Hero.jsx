@@ -92,13 +92,13 @@ export default function Hero() {
           </Reveal>
  
           <Reveal delay={4} className="hero__actions">
-            <a className="btn btn--primary" href="#projects">
-              What I&rsquo;m Working On
-              <ArrowRightIcon size={16} />
-            </a>
-            <a className="btn btn--outline" href="#contact">
+            <a className="btn btn--primary" href="#contact">
               <MailIcon size={16} />
               Get in Touch
+            </a>
+            <a className="btn btn--outline" href="#projects">
+              What I&rsquo;m Working On
+              <ArrowRightIcon size={16} />
             </a>
           </Reveal>
 

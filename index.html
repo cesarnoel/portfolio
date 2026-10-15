@@ -3,13 +3,33 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="/media/cnsq-logo-mark.png" />
+    <link rel="icon" type="image/svg+xml" href="/media/cnsq-logo-mark.svg" />
     <title>CNSQ Dev – Online Portfolio of Cesar Noel Quiñon</title>
     <meta
       name="description"
-      content="Online portfolio of Cesar Noel Quiñon, Senior WordPress Engineer specializing in custom WordPress websites, theme development, and robust maintenance solutions tailored for your unique business needs."
+      content="Online portfolio of Cesar Noel Quiñon, Full-Stack Web Engineer specializing in custom WordPress websites, theme development, and robust maintenance solutions tailored for your unique business needs."
     />
     <meta name="theme-color" content="#0f172a" />
+
+    <!-- Structured data: helps search engines understand who this portfolio belongs to -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Cesar Noel Quiñon",
+        "jobTitle": "Full-Stack Web Engineer",
+        "url": "https://cnsqwordpressengr.netlify.app",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Davao City",
+          "addressCountry": "PH"
+        },
+        "sameAs": [
+          "https://www.linkedin.com/in/engrcesarnoel/",
+          "mailto:cnsqdesigns@gmail.com"
+        ]
+      }
+    </script>
 
     <!--
       Applied before React mounts so a dark-mode visitor never sees a flash of
@@ -31,7 +51,7 @@
 
     <!-- Social preview -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Cesar Noel Quiñon — Senior WordPress Engineer" />
+    <meta property="og:title" content="Cesar Noel Quiñon — Full-Stack Web Engineer" />
     <meta
       property="og:description"
       content="Custom WordPress websites, theme development, robust maintenance solutions and graphic design works — web, print and e-book design."
@@ -58,7 +78,7 @@
   <body class="bg-ink-50 text-ink-900 antialiased dark:bg-ink-950 dark:text-ink-50">
     <noscript>
       <main class="mx-auto flex min-h-screen max-w-3xl flex-col justify-center gap-4 p-8">
-        <h1 class="text-3xl font-extrabold">Cesar Noel Quiñon &mdash; Senior WordPress Engineer</h1>
+        <h1 class="text-3xl font-extrabold">Cesar Noel Quiñon &mdash; Full-Stack Web Engineer</h1>
         <p class="leading-relaxed">
           This portfolio is built with React, Tailwind CSS and SASS and needs JavaScript
           enabled. Reach me directly at

@@ -10,6 +10,7 @@ import Navbar from './components/Navbar';
 import Projects from './components/Projects';
 import ScrollToTop from './components/ScrollToTop';
 import Skills from './components/Skills';
+import Testimonials from './components/Testimonials';
 
 export default function App() {
   const { isDark, toggleTheme } = useTheme();
@@ -28,6 +29,7 @@ export default function App() {
       <main id="main" tabIndex={-1}>
         <Hero />
         <About />
+        <Testimonials />
         <Skills />
         <Projects />
         <Designs />

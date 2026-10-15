@@ -239,6 +239,24 @@ export default function Contact() {
                 publishing training so you can run the site yourself.
               </p>
             </div>
+
+            <div className="booking-card">
+              <p className="booking-card__title">Prefer to talk it through?</p>
+              <p className="booking-card__text">
+                Book a free 20-minute intro call — we will look at your site and what it needs next.
+              </p>
+              {/*
+                Swap the mailto below for your Calendly embed when ready, e.g.:
+                <div className="calendly-inline-widget" data-url="https://calendly.com/YOUR-LINK/20min" style={{ minWidth: 320, height: 630 }} />
+                <script src="https://assets.calendly.com/assets/external/widget.js" async />
+              */}
+              <a
+                className="btn btn--primary btn--sm"
+                href={`mailto:${profile.email}?subject=${encodeURIComponent('Intro call request')}&body=${encodeURIComponent('Hi Cesar, I would like to book a 20-minute intro call. Here are a few times that work for me:\n\n1.\n2.\n\nMy site: ')}`}
+              >
+                Book a call
+              </a>
+            </div>
           </aside>
         </Reveal>
       </div>

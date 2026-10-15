@@ -35,22 +35,28 @@ export default function Projects() {
       title={projectsIntro.title}
       lead={projectsIntro.lead}
     >
-      <div className="reveal mb-8 flex flex-wrap items-center gap-2">
-        <span className="mr-1 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-ink-400">
+      <div className="reveal mb-8 flex items-center gap-2">
+        <span className="mr-1 flex shrink-0 items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-ink-400">
           <FilterIcon size={14} />
           Filter
         </span>
-        {filters.map((filter) => (
-          <button
-            key={filter}
-            type="button"
-            className="chip"
-            onClick={() => setActiveFilter(filter)}
-            aria-pressed={activeFilter === filter}
-          >
-            {filter}
-          </button>
-        ))}
+        <div
+          className="filter-scroll"
+          role="group"
+          aria-label="Filter projects by technology"
+        >
+          {filters.map((filter) => (
+            <button
+              key={filter}
+              type="button"
+              className="chip"
+              onClick={() => setActiveFilter(filter)}
+              aria-pressed={activeFilter === filter}
+            >
+              {filter}
+            </button>
+          ))}
+        </div>
       </div>
 
       {visibleProjects.length > 0 ? (
