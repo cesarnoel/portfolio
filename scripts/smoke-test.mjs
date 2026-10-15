@@ -61,7 +61,7 @@ const presenceChecks = [
   ['first project title rendered', /AIB Private Investigations/],
   ['last project title rendered', /Demo E-Commerce Site/],
   ['project screenshot rendered', /\/media\/projects\/screenshot-1\.jpg/],
-  ['portrait rendered', /\/media\/cesar-noel-quinon\.jpg/],
+  ['portrait rendered', /\/media\/cnsq-corppic_final\.png/],
   ['design gallery rendered', /design-gallery__item/],
   ['skill bar receives --level', /--level:92%/],
   ['skill group icon rendered', /skill-card__icon/],
