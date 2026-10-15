@@ -10,7 +10,7 @@ export const profile = {
   name: 'Cesar Noel Quiñon',
   brand: 'CNSQ Dev',
   initials: 'CN',
-  role: 'Senior WordPress Engineer',
+  role: 'Full-Stack Web Engineer',
   greeting: "Hello, I'm Cesar Noel",
   available: "Have a WordPress project or need ongoing maintenance? Let's talk.",
   location: 'Davao City, Philippines',

@@ -76,7 +76,7 @@ export default function Hero() {
           </Reveal>
 
           <Reveal as="h1" delay={1} className="hero__title">
-            Senior <span className="text-gradient">WordPress Engineer</span>
+            Full-Stack <span className="text-gradient">Web Engineer</span>
           </Reveal>
 
           <Reveal as="p" delay={2} className="hero__role">
