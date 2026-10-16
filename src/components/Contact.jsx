@@ -1,11 +1,30 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { profile } from '../data/portfolio';
 import { LinkedinIcon, MailIcon, MapPinIcon, SendIcon, SparklesIcon } from './Icons';
 import Reveal from './Reveal';
 import Section from './Section';
 
-const EMPTY_FORM = { name: '', email: '', subject: '', message: '' };
+const EMPTY_FORM = { name: '', email: '', subject: '', message: '', website: '' };
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+// Business inbox — single source is profile.email, fallback keeps form working
+// even if profile import fails.
+const BUSINESS_EMAIL = 'cnsqdesigns@gmail.com';
+
+// --- Anti-spam tunables (no backend needed) ---
+const MIN_FILL_SECONDS = 4; // humans need a few seconds; bots submit instantly
+const RATE_LIMIT_SECONDS = 60; // one message per minute per browser
+const MAX_LINKS = 3; // more than this many URLs in message = likely spam
+const SPAM_PHRASES = [
+  'seo offer',
+  'guaranteed ranking',
+  'crypto giveaway',
+  'double your bitcoin',
+  'free followers',
+  'buy followers',
+  'viagra',
+  'cialis',
+  'loan approval',
+];
 
 function validate(values) {
   const errors = {};
@@ -22,18 +41,45 @@ function validate(values) {
     errors.message = 'A little more detail helps — at least 20 characters.';
   }
 
+  // Link-count check: legit enquiries rarely contain many URLs.
+  const linkCount = (values.message.match(/https?:\/\/|www\./gi) || []).length;
+  if (linkCount > MAX_LINKS) {
+    errors.message = `Please remove extra links (max ${MAX_LINKS}) and try again.`;
+  }
+
   return errors;
 }
 
+const countLinks = (text) => (text.match(/https?:\/\/|www\./gi) || []).length;
+
+const containsSpamPhrase = (text) => {
+  const lowered = text.toLowerCase();
+  return SPAM_PHRASES.some((phrase) => lowered.includes(phrase));
+};
+
 /**
- * Front-end only contact form: validates, then hands the message to the
- * visitor's mail client. Swap the mailto for a fetch() to your own endpoint
- * (Formspree, Resend, a serverless function) once you have a backend.
+ * Contact form: validates in the browser, then sends directly to the
+ * business inbox (cnsqdesigns@gmail.com) via FormSubmit's AJAX endpoint.
+ * Falls back to opening the visitor's mail client if the network send fails.
+ *
+ * Anti-spam layers (all invisible to humans):
+ *  1. Honeypot field `website` — hidden from sighted users, bots fill it.
+ *  2. Time-trap — bots submit in < MIN_FILL_SECONDS; humans take longer.
+ *  3. Rate limit — one send per RATE_LIMIT_SECONDS per browser (localStorage).
+ *  4. Content checks — max links + known spam phrases.
+ *  5. FormSubmit `_honey` + `_captcha:true` for server-side filtering.
  */
 export default function Contact() {
   const [values, setValues] = useState(EMPTY_FORM);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState(null);
+  const [sending, setSending] = useState(false);
+  const formLoadedAt = useRef(Date.now());
+
+  // Reset the time-trap when the form scrolls into view (fresh human timing).
+  useEffect(() => {
+    formLoadedAt.current = Date.now();
+  }, []);
 
   const updateField = (event) => {
     const { name, value } = event.target;
@@ -42,7 +88,40 @@ export default function Contact() {
     setStatus(null);
   };
 
-  const handleSubmit = (event) => {
+  const openMailClient = () => {
+    const to = profile.email || BUSINESS_EMAIL;
+    const subject = encodeURIComponent(
+      values.subject.trim() || `Project enquiry from ${values.name}`,
+    );
+    const body = encodeURIComponent(`${values.message}\n\n— ${values.name}\n${values.email}`);
+    window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+  };
+
+  const isSpamAttempt = () => {
+    // 1. Honeypot — real users never see/fill `website`.
+    if (values.website.trim() !== '') return 'honeypot';
+
+    // 2. Time-trap — submitted too fast to be human.
+    const elapsedSeconds = (Date.now() - formLoadedAt.current) / 1000;
+    if (elapsedSeconds < MIN_FILL_SECONDS) return 'too-fast';
+
+    // 3. Rate limit — same browser sent very recently.
+    try {
+      const lastSent = Number(localStorage.getItem('contact-last-sent') || 0);
+      if (Date.now() - lastSent < RATE_LIMIT_SECONDS * 1000) return 'rate-limited';
+    } catch {
+      // localStorage unavailable (private mode) — skip rate limit, other checks remain.
+    }
+
+    // 4. Content checks — too many links or known spam phrases.
+    const combined = `${values.name} ${values.subject} ${values.message}`;
+    if (countLinks(values.message) > MAX_LINKS) return 'too-many-links';
+    if (containsSpamPhrase(combined)) return 'spam-phrase';
+
+    return null;
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const nextErrors = validate(values);
     setErrors(nextErrors);
@@ -52,17 +131,67 @@ export default function Contact() {
       return;
     }
 
-    const subject = encodeURIComponent(
-      values.subject.trim() || `Project enquiry from ${values.name}`,
-    );
-    const body = encodeURIComponent(`${values.message}\n\n— ${values.name}\n${values.email}`);
-    window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
+    // Silent drop for bots: pretend success so they don't retry with variations.
+    const spamReason = isSpamAttempt();
+    if (spamReason === 'rate-limited') {
+      setStatus({
+        type: 'error',
+        message: `Please wait a minute before sending another message — spam protection is on.`,
+      });
+      return;
+    }
+    if (spamReason) {
+      setStatus({
+        type: 'success',
+        message: `Message sent — thanks for reaching out! I will reply as soon as possible.`,
+      });
+      setValues(EMPTY_FORM);
+      formLoadedAt.current = Date.now();
+      return;
+    }
 
-    setStatus({
-      type: 'success',
-      message: 'Your mail client should be opening — thanks for reaching out!',
-    });
-    setValues(EMPTY_FORM);
+    const to = profile.email || BUSINESS_EMAIL;
+    setSending(true);
+    setStatus({ type: 'sending', message: `Sending to ${to}…` });
+
+    try {
+      const response = await fetch(`https://formsubmit.co/ajax/${to}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          name: values.name.trim(),
+          email: values.email.trim(),
+          subject: values.subject.trim() || `Project enquiry from ${values.name.trim()}`,
+          message: values.message.trim(),
+          _subject: values.subject.trim() || `Project enquiry from ${values.name.trim()}`,
+          _template: 'table',
+          _captcha: 'true',
+          _honey: values.website.trim(),
+        }),
+      });
+
+      if (!response.ok) throw new Error(`FormSubmit responded ${response.status}`);
+
+      try {
+        localStorage.setItem('contact-last-sent', String(Date.now()));
+      } catch {
+        // Ignore storage errors — send already succeeded.
+      }
+      setStatus({
+        type: 'success',
+        message: `Message sent to ${to} — thanks for reaching out! I will reply as soon as possible.`,
+      });
+      setValues(EMPTY_FORM);
+      formLoadedAt.current = Date.now();
+    } catch {
+      openMailClient();
+      setStatus({
+        type: 'success',
+        message: `Could not send automatically, so your mail client should be opening to ${to} — just hit Send there. Thanks!`,
+      });
+    } finally {
+      setSending(false);
+    }
   };
 
   const fieldClass = (field) => `field ${errors[field] ? 'field--invalid' : ''}`.trim();
@@ -77,6 +206,20 @@ export default function Contact() {
       <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14">
         <Reveal>
           <form className="contact-form" onSubmit={handleSubmit} noValidate>
+            {/* Honeypot: hidden from humans, bots fill it and get silently dropped. */}
+            <div className="field-honeypot" aria-hidden="true">
+              <label htmlFor="contact-website">Website</label>
+              <input
+                id="contact-website"
+                name="website"
+                type="text"
+                autoComplete="off"
+                tabIndex={-1}
+                placeholder="Leave this empty"
+                value={values.website}
+                onChange={updateField}
+              />
+            </div>
             <div className="grid gap-x-5 sm:grid-cols-2">
               <div className={fieldClass('name')}>
                 <label className="field__label" htmlFor="contact-name">
@@ -169,14 +312,14 @@ export default function Contact() {
               )}
             </div>
 
-            <button className="btn btn--primary btn--block" type="submit">
+            <button className="btn btn--primary btn--block" type="submit" disabled={sending}>
               <SendIcon size={16} />
-              Send message
+              {sending ? 'Sending…' : `Send to ${(profile.email || BUSINESS_EMAIL)}`}
             </button>
 
             {status ? (
               <p
-                className={`form-status form-status--${status.type}`}
+                className={`form-status form-status--${status.type === 'sending' ? 'info' : status.type}`}
                 role="status"
                 aria-live="polite"
               >
@@ -185,8 +328,8 @@ export default function Contact() {
             ) : null}
 
             <p className="field__hint mt-4">
-              This form validates in the browser and then opens your mail client — nothing is sent
-              to a third party.
+              This form sends directly to {(profile.email || BUSINESS_EMAIL)} — please contact me
+              via email, I reply as soon as possible.
             </p>
           </form>
         </Reveal>
@@ -199,7 +342,7 @@ export default function Contact() {
             </p>
 
             <p className="leading-relaxed text-ink-500 dark:text-ink-300">
-              Prefer email or LinkedIn? Use whichever is easiest — I read everything and strive to
+              Please contact me via email — I read everything at {profile.email} and strive to
               respond to all inquiries as soon as possible.
             </p>
 
@@ -238,24 +381,6 @@ export default function Contact() {
                 Custom WordPress builds, theme customization and ongoing maintenance — plus content
                 publishing training so you can run the site yourself.
               </p>
-            </div>
-
-            <div className="booking-card">
-              <p className="booking-card__title">Prefer to talk it through?</p>
-              <p className="booking-card__text">
-                Book a free 20-minute intro call — we will look at your site and what it needs next.
-              </p>
-              {/*
-                Swap the mailto below for your Calendly embed when ready, e.g.:
-                <div className="calendly-inline-widget" data-url="https://calendly.com/YOUR-LINK/20min" style={{ minWidth: 320, height: 630 }} />
-                <script src="https://assets.calendly.com/assets/external/widget.js" async />
-              */}
-              <a
-                className="btn btn--primary btn--sm"
-                href={`mailto:${profile.email}?subject=${encodeURIComponent('Intro call request')}&body=${encodeURIComponent('Hi Cesar, I would like to book a 20-minute intro call. Here are a few times that work for me:\n\n1.\n2.\n\nMy site: ')}`}
-              >
-                Book a call
-              </a>
             </div>
           </aside>
         </Reveal>

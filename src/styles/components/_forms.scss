@@ -17,6 +17,18 @@
     margin-bottom: 1.15rem;
   }
 
+  // Honeypot anti-spam field: off-screen (not display:none, so bots still
+  // see and fill it) and unreachable by keyboard / screen readers.
+  .field-honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+
   .field__label {
     font-size: a.fs('sm');
     font-weight: 600;
@@ -109,6 +121,15 @@
 
       .dark & {
         color: #fca5a5;
+      }
+    }
+
+    &--info {
+      background-color: a.alpha(a.$brand-500, 0.14);
+      color: a.$brand-600;
+
+      .dark & {
+        color: a.$accent-400;
       }
     }
   }

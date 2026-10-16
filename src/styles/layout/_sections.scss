@@ -567,31 +567,6 @@
     }
   }
 
-  // ---------- Booking card (Contact aside) ----------
-  .booking-card {
-    @include a.surface('xl');
-
-    margin-top: 1rem;
-    padding: 1.25rem 1.3rem;
-  }
-
-  .booking-card__title {
-    font-size: a.fs('base');
-    font-weight: 700;
-  }
-
-  .booking-card__text {
-    margin-top: 0.4rem;
-    margin-bottom: 1rem;
-    font-size: a.fs('sm');
-    line-height: a.lh('loose');
-    color: a.$ink-500;
-
-    .dark & {
-      color: a.$ink-300;
-    }
-  }
-
   // ---------- Call-to-action banner ----------
   .cta-banner {
     position: relative;
