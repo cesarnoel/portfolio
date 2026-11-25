@@ -249,7 +249,7 @@ export const projects = [
     id: 'simple-todo-app',
     title: 'My Simple To-Do List App',
     kind: 'Demo build',
-    image: '/media/projects/screenshot-10.jpg',
+    image: '/media/projects/todo.png',
     tagline: 'Simple to-do list application built with React and deployed on Vercel.',
     highlights: demoBullets,
     tags: ['React', 'JavaScript', 'Vercel', 'Demo'],
