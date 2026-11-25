@@ -245,6 +245,17 @@ export const projects = [
     links: { live: 'https://dev-wooconmmerce-kadence.pantheonsite.io/' },
     cta: 'View Demo',
   },
+  {
+    id: 'simple-todo-app',
+    title: 'My Simple To-Do List App',
+    kind: 'Demo build',
+    image: '/media/projects/screenshot-10.jpg',
+    tagline: 'Simple to-do list application built with React and deployed on Vercel.',
+    highlights: demoBullets,
+    tags: ['React', 'JavaScript', 'Vercel', 'Demo'],
+    links: { live: 'https://simple-to-do-cu8c.vercel.app' },
+    cta: 'View Demo',
+  },
 ];
 
 // Graphic Design Works — content from the companion gallery
